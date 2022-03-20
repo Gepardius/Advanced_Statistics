@@ -27,6 +27,9 @@ def bernoulli(p):
     Expected_value = p
     print(f"Expected value = {Expected_value}")
 
+
 bernoulli(0.27)
 
 # b) Poisson distribution
+# 𝜆 =
+
