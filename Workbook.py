@@ -24,12 +24,14 @@ def bernoulli(p):
     plt.pie(v, labels=votes, autopct="%1.1f%%")  # plot a pie chart with percentages
     plt.show()
 
-    Expected_value = p
-    print(f"Expected value = {Expected_value}")
+    expected_value = p
+    print(f"Expected value = {expected_value}")
 
-
-bernoulli(0.27)
 
 # b) Poisson distribution
 # 𝜆 =
+def poisson_distribution(lambd):
+    pass
 
+bernoulli(0.27)
+poisson_distribution(0)
