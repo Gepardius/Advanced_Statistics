@@ -1,4 +1,5 @@
 import statistics
+import math
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
@@ -32,24 +33,33 @@ def bernoulli(p):
 # bernoulli(0.27)
 
 # b) Poisson distribution
-def poisson_calculation(mu):
+def poisson_calculation(mu_poisson):
     poisson_probability = []
     x_l = []
     for i in range(1000):
-        y = poisson.pmf(k=i, mu=mu)  # mu = 𝜆/mean/expectancy , k = probability that it will happen
+        y = poisson.pmf(k=i, mu=mu_poisson)  # mu = 𝜆/expectancy , k = probability that it will happen
         if y > 0.005:
             poisson_probability.append(y)
             x_l.append(i)
 
+    variance_poisson = poisson.var(mu=mu_poisson, loc=0)
+    mean_poisson = poisson.mean(mu=mu_poisson, loc=0)
+    median_poisson = poisson.median(mu=mu_poisson, loc=0)
+
     plt.clf()
-    plt.plot(x_l, poisson_probability)
+
+    # plot poisson distribution with line plot
+    plt.plot(x_l, poisson_probability, color="Green", label="Poisson distribution")
     plt.xlabel("N. of meteorites falling")
     plt.ylabel("Probability")
+
+    # plot medan and variance with scatter plot
+    plt.scatter(median_poisson, max(poisson_probability), color="red", label="Median", s=50)
+    plt.scatter(variance_poisson, max(poisson_probability), color="orange", label="Variance", marker="x", s=100)
+
+    plt.legend(loc=3)
     plt.show()
 
-    median_poisson = statistics.median(x_l)
-    variance_poisson = statistics.variance(x_l)
-    mean_poisson = statistics.mean(x_l)
     print(f"Median: {median_poisson}")
     print(f"Variance: {variance_poisson}")
     print(f"Mean: {mean_poisson}")
