@@ -2,6 +2,7 @@ import math
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
+from scipy.stats import poisson
 
 
 # 1: BASIC PROBABILITIES AND VISUALIZATIONS (1)
@@ -27,11 +28,24 @@ def bernoulli(p):
     expected_value = p
     print(f"Expected value = {expected_value}")
 
+bernoulli(0.27)
 
 # b) Poisson distribution
 # 𝜆 =
-def poisson_distribution(lambd):
-    pass
+poisson_probability = []
+x_l = []
+for i in range(101):
+    y = poisson.pmf(k=i, mu=37)  # mu = average, k = probability that it will happen
+    if y > 0.005:
+        poisson_probability.append(y)
+        x_l.append(i)
 
-bernoulli(0.27)
-poisson_distribution(0)
+plt.clf()
+plt.plot(x_l, poisson_probability)
+plt.xlabel("N. of meteorites falling")
+plt.ylabel("Probability")
+plt.show()
+
+
+
+
