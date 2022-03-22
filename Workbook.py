@@ -1,4 +1,4 @@
-import math
+import statistics
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
@@ -28,24 +28,31 @@ def bernoulli(p):
     expected_value = p
     print(f"Expected value = {expected_value}")
 
-bernoulli(0.27)
+
+# bernoulli(0.27)
 
 # b) Poisson distribution
-# 𝜆 =
-poisson_probability = []
-x_l = []
-for i in range(101):
-    y = poisson.pmf(k=i, mu=37)  # mu = average, k = probability that it will happen
-    if y > 0.005:
-        poisson_probability.append(y)
-        x_l.append(i)
+def poisson_calculation(mu):
+    poisson_probability = []
+    x_l = []
+    for i in range(1000):
+        y = poisson.pmf(k=i, mu=mu)  # mu = 𝜆/mean/expectancy , k = probability that it will happen
+        if y > 0.005:
+            poisson_probability.append(y)
+            x_l.append(i)
 
-plt.clf()
-plt.plot(x_l, poisson_probability)
-plt.xlabel("N. of meteorites falling")
-plt.ylabel("Probability")
-plt.show()
+    plt.clf()
+    plt.plot(x_l, poisson_probability)
+    plt.xlabel("N. of meteorites falling")
+    plt.ylabel("Probability")
+    plt.show()
+
+    median_poisson = statistics.median(x_l)
+    variance_poisson = statistics.variance(x_l)
+    mean_poisson = statistics.mean(x_l)
+    print(f"Median: {median_poisson}")
+    print(f"Variance: {variance_poisson}")
+    print(f"Mean: {mean_poisson}")
 
 
-
-
+poisson_calculation(37)
