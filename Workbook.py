@@ -34,14 +34,15 @@ def bernoulli(p):
 
 # b) Poisson distribution
 def poisson_calculation(mu_poisson):
-    poisson_probability = []
-    x_l = []
+    poisson_probability = []    # list to store probabilities
+    x_l = []    # list to store number of meteorites
     for i in range(1000):
         y = poisson.pmf(k=i, mu=mu_poisson)  # mu = 𝜆/expectancy , k = probability that it will happen
         if y > 0.005:
             poisson_probability.append(y)
             x_l.append(i)
 
+    # calculate poisson variance, mean and median
     variance_poisson = poisson.var(mu=mu_poisson, loc=0)
     mean_poisson = poisson.mean(mu=mu_poisson, loc=0)
     median_poisson = poisson.median(mu=mu_poisson, loc=0)
@@ -64,5 +65,8 @@ def poisson_calculation(mu_poisson):
     print(f"Variance: {variance_poisson}")
     print(f"Mean: {mean_poisson}")
 
+    # table of Probability and N. of meteorites
+    meteorites_table = pd.DataFrame(list(zip(poisson_probability, x_l)), columns=["Probability", "N. of meteorites"])
+    print(meteorites_table)
 
 poisson_calculation(37)
