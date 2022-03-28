@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy.stats import poisson
+from scipy.stats import norm
 
 
 # 1: BASIC PROBABILITIES AND VISUALIZATIONS (1)
@@ -69,4 +70,24 @@ def poisson_calculation(mu_poisson):
     meteorites_table = pd.DataFrame(list(zip(poisson_probability, x_l)), columns=["Probability", "N. of meteorites"])
     print(meteorites_table)
 
-poisson_calculation(37)
+
+# poisson_calculation(37)
+
+# c) probability density
+# 0. 3e^−0.5 𝑦 + 0. 6e−0.25 𝑦
+# print(2.0e+308)
+y = 1
+a = 1.59
+b = 1.60
+
+x = a % 1
+y = b % 1
+print(x/0.99)
+print(y/0.99)
+# for i in range(100):
+#
+#     a += x
+#
+# x = a[::-1].find('.')
+# a += x
+# print(a ** (-0.5*y) + b ** (-0.25*y))
