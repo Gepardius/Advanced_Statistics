@@ -87,10 +87,10 @@ def poisson_calculation(mu_poisson):
 # print(z/0.99)
 #
 # a * np.exp(-0.5 * y) + b * np.exp(-0.25 * y)
-def prob_density(a, b):
-    a = (a % 1) / 99
-    b = (b % 1) / 99
-    return lambda y: a * np.exp(-0.5 * y) + b * np.exp(-0.25 * y)
+def prob_density(aa, bb):
+    aa = (aa % 1) / 99
+    bb = (bb % 1) / 99
+    return lambda y: aa * np.exp(-0.5 * y) + bb * np.exp(-0.25 * y)
 
 
 a = 0.55
