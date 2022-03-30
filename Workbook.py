@@ -76,18 +76,10 @@ def poisson_calculation(mu_poisson):
 
 # c) probability density
 # 0. 3e−0.5 𝑦 + 0. 6e−0.25 𝑦
-# y = 1
-#
-# a = 1.59
-# b = 1.60
-#
-# x = a % 1
-# z = b % 1
-# print(x/0.99)
-# print(z/0.99)
-#
 # a * np.exp(-0.5 * y) + b * np.exp(-0.25 * y)
 # 0.55555555* e^(-0.5 * y) + 0.444444* e^(-0.25 * y)
+
+# define function and periodic variables
 def prob_density(aa, bb):
     aa = (aa % 1) / 99
     bb = (bb % 1) / 99
@@ -96,28 +88,39 @@ def prob_density(aa, bb):
 
 def probability_density_function(a, b):
     minute_probabilities = []
-    for i in range(360):
+    for i in range(119, 241):
         result_by_min, none = spi.fixed_quad(prob_density(a, b), i / 60, (i + 1) / 60)
         minute_probabilities.append(result_by_min * 100)
 
     result_by_h, none = spi.fixed_quad(prob_density(a, b), 2, 4)
     # return probability between 2 and 4 hours
-    print(result_by_h)
+    print(result_by_h * 100)
+
+    # mean and variance
+    mean = round(np.mean(minute_probabilities), 5)
+    variance = np.std(minute_probabilities) ** 2
+    variance = round(variance, 10)
 
     # plot histogram
     plt.clf()
-    plt.bar(np.linspace(0, 360, 360), minute_probabilities)
+    # plt.step(np.arange(119, 241, 1), minute_probabilities, color="blue")
+    plt.bar(np.arange(119, 241, 1), minute_probabilities, color="blue", fill=False, width=1, label="prob. histogram")
+    plt.plot(np.arange(119, 241, 1), minute_probabilities, color="green", label="probability function")
+
+    plt.scatter(150, minute_probabilities[30], label="Q1", color="red")
+    plt.scatter(180, minute_probabilities[60], label="Q2", color="red")
+    plt.scatter(210, minute_probabilities[90], label="Q3", color="red")
+
+    plt.text(210, .006, r'$\mu=\ $')
+    plt.text(217, .006, mean)
+    plt.text(210, .005, r'$\sigma=\ $')
+    plt.text(217, .005, variance)
+
+    plt.legend(loc=3)
     plt.xlabel("Minutes")
     plt.ylabel("Probability")
     plt.show()
 
 
-probability_density_function(0.55, 0.44)
-# integration
 
-
-
-# result, none = spi.fixed_quad(prob_density(a, b), 2, 4)
-# print(result)
-# result *= 100
-# print(result)
+probability_density_function(0.83, 0.16)
