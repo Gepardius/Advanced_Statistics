@@ -87,14 +87,37 @@ def poisson_calculation(mu_poisson):
 # print(z/0.99)
 #
 # a * np.exp(-0.5 * y) + b * np.exp(-0.25 * y)
+# 0.55555555* e^(-0.5 * y) + 0.444444* e^(-0.25 * y)
 def prob_density(aa, bb):
     aa = (aa % 1) / 99
     bb = (bb % 1) / 99
     return lambda y: aa * np.exp(-0.5 * y) + bb * np.exp(-0.25 * y)
 
 
-a = 0.55
-b = 0.44
+def probability_density_function(a, b):
+    minute_probabilities = []
+    for i in range(360):
+        result_by_min, none = spi.fixed_quad(prob_density(a, b), i / 60, (i + 1) / 60)
+        minute_probabilities.append(result_by_min * 100)
 
-result, none = spi.fixed_quad(prob_density(a, b), 2, 4)
-print(result)
+    result_by_h, none = spi.fixed_quad(prob_density(a, b), 2, 4)
+    # return probability between 2 and 4 hours
+    print(result_by_h)
+
+    # plot histogram
+    plt.clf()
+    plt.bar(np.linspace(0, 360, 360), minute_probabilities)
+    plt.xlabel("Minutes")
+    plt.ylabel("Probability")
+    plt.show()
+
+
+probability_density_function(0.55, 0.44)
+# integration
+
+
+
+# result, none = spi.fixed_quad(prob_density(a, b), 2, 4)
+# print(result)
+# result *= 100
+# print(result)
