@@ -92,8 +92,8 @@ def probability_density_function(a, b):
         result_by_min, none = spi.fixed_quad(prob_density(a, b), i / 60, (i + 1) / 60)
         minute_probabilities.append(result_by_min * 100)
 
-    result_by_h, none = spi.fixed_quad(prob_density(a, b), 2, 4)
     # return probability between 2 and 4 hours
+    result_by_h, none = spi.fixed_quad(prob_density(a, b), 2, 4)
     print(result_by_h * 100)
 
     # mean and variance
@@ -127,7 +127,7 @@ def probability_density_function(a, b):
 # a) Calculate the sample covariance as well as the sample’s expectations (mean) and variances of 𝑋 and 𝑌.
 # Covariance; Cov(X,Y) = Σ(Xi – μ)(Yj – ν) / (n-1)
 # the expected value is the sum of; [(each of the possible outcomes) × (the probability of the outcome occurring)]
-# Variance; Var(X) = E[ (X – m)2 ]; where m is the expected value E(X)
+# Variance; Var(X) = E[ (X – m)2 ]; where m is the mean value E(X)
 
 # load data into dataframe and calc. cov, E[X, Y], var[X, Y]
 def sample(values):
@@ -176,20 +176,25 @@ def sample(values):
 
     var_x = 0
     var_y = 0
+    mean_x = df["X"].mean()
+    mean_y = df["Y"].mean()
     for i in range(20):
         xc = df.iloc[i, 0]
         yc = df.iloc[i, 1]
 
-        var_x += ((xc - x_exp) ** 2)
-        var_y += ((yc - y_exp) ** 2)
+        var_x += ((xc - mean_x) ** 2)
+        var_y += ((yc - mean_y) ** 2)
+
+    var_x /= 20
+    var_y /= 20
 
     print(f"Covariance = {covariance}")
     print(f"x expected value = {x_exp}")
     print(f"y expected value = {y_exp}")
     print(f"x variance = {var_x}")
     print(f"y variance = {var_y}")
-    print(f"SD x = {np.sqrt(var_x)}")
-    print(f"SD y = {np.sqrt(var_y)}")
+    print(f"Standard deviation of x = {np.sqrt(var_x)}")
+    print(f"Standard deviation of y = {np.sqrt(var_y)}")
 
     # plot scatter plot
     plt.clf()
@@ -205,9 +210,4 @@ values = """(−1.202, 563.024), (2.112, 291.072), (2.827, −893.619), (−0.31
 (−3.176, 389.413), (1.913, −47.169), (−1.070, −178.695), (−3.385, 744.486),
 (−9.506, 362.670), (−7.004, 364.578), (0.504, 324.975), (2.861, −360.571)"""
 
-values1 = """(-7.408, -93.7), (-1.281, -683.83), (1.425, 629.31), (-2.192, 1181.25), 
-(4.85, -268.34), (9.203, 455.66), (-3.087, 155.3), (8.694, 548.23), (-4.803, 284.77), 
-(1.749, -265.15), (5.087, 519.59), (-4.386, 144.69), (1.24, 243.51), (-1.734, 481.22), 
-(2.037, -445.44), (2.969, -1053.87), (0.436, -241.93), (5.292, -374.82), (-1.773, -590.97), (-3.754, -453.98)"""
-
-sample(values)
+# sample(values)
