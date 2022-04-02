@@ -125,28 +125,89 @@ def probability_density_function(a, b):
 
 # 2.
 # a) Calculate the sample covariance as well as the sample’s expectations (mean) and variances of 𝑋 and 𝑌.
-# the expected value is the sum of: [(each of the possible outcomes) × (the probability of the outcome occurring)]
+# Covariance; Cov(X,Y) = Σ(Xi – μ)(Yj – ν) / (n-1)
+# the expected value is the sum of; [(each of the possible outcomes) × (the probability of the outcome occurring)]
+# Variance; Var(X) = E[ (X – m)2 ]; where m is the expected value E(X)
+
+# load data into dataframe and calc. cov, E[X, Y], var[X, Y]
+def sample(values):
+    x_l = []
+    for i in range(0, 40, 2):
+        x_value = values.split(",")[i]
+        x_value = x_value.replace("(", "")
+        x_value = x_value.replace("\n", "")
+        x_value = x_value.replace("−", "-")
+        x_value = float(x_value)
+        x_l.append(x_value)
+    # print(x_l)
+
+    y_l = []
+    for i in range(1, 41, 2):
+        y_value = values.split(",")[i]
+        y_value = y_value.replace(")", "")
+        y_value = y_value.replace("\n", "")
+        y_value = y_value.replace("−", "-")
+        y_value = float(y_value)
+        y_l.append(y_value)
+    # print(y_l)
+
+    df = pd.DataFrame(list(zip(x_l, y_l)), columns =['X', 'Y'])
+    df = df.astype(float)
+    # print(df)
+    x_mean = df["X"].mean()
+    y_mean = df["Y"].mean()
+    # print(f"x_mean = {x_mean}, y_mean = {y_mean}")
+
+    # covariance = Cov(X,Y) = Σ(Xi – μ)(Yj – ν) / (n-1)
+    # expected value of x and y; E[X, Y] = E(X) = S x P(X = x)
+    # Var(X) = E[ (X – m)2 ]; Var(Y) = E[ (Y – m)2 ]
+    sum_cov = 0
+    x_exp = 0
+    y_exp = 0
+    for i in range(20):
+        xc = df.iloc[i, 0]
+        yc = df.iloc[i, 1]
+        sum_cov += (xc - x_mean) * (yc - y_mean)    # covariance
+
+        x_exp += xc * (1/20)    # x expected value
+        y_exp += yc * (1/20)    # y expected value
+
+    covariance = sum_cov / 19
+
+    var_x = 0
+    var_y = 0
+    for i in range(20):
+        xc = df.iloc[i, 0]
+        yc = df.iloc[i, 1]
+
+        var_x += ((xc - x_exp) ** 2)
+        var_y += ((yc - y_exp) ** 2)
+
+    print(f"Covariance = {covariance}")
+    print(f"x expected value = {x_exp}")
+    print(f"y expected value = {y_exp}")
+    print(f"x variance = {var_x}")
+    print(f"y variance = {var_y}")
+    print(f"SD x = {np.sqrt(var_x)}")
+    print(f"SD y = {np.sqrt(var_y)}")
+
+    # plot scatter plot
+    plt.clf()
+    plt.scatter(df["X"], df["Y"], color="green")
+    plt.xlabel("X values")
+    plt.ylabel("Y values")
+    plt.show()
+
+
 values = """(−1.202, 563.024), (2.112, 291.072), (2.827, −893.619), (−0.314, 1321.814),
 (−1.477, −91.573), (−6.516, 446.336), (−0.920, −111.487), (3.477, −153.165),
 (−7.273, 1076.221), (2.251, 477.931), (−0.713, 909.696), (−0.853, 226.865),
 (−3.176, 389.413), (1.913, −47.169), (−1.070, −178.695), (−3.385, 744.486),
 (−9.506, 362.670), (−7.004, 364.578), (0.504, 324.975), (2.861, −360.571)"""
 
-x_l = []
-for i in range(0, 40, 2):
-    x_value = values.split(",")[i]
-    x_value = x_value.replace("(", "")
-    x_value = x_value.replace("\n", "")
-    x_l.append(x_value)
-# print(x_l)
+values1 = """(-7.408, -93.7), (-1.281, -683.83), (1.425, 629.31), (-2.192, 1181.25), 
+(4.85, -268.34), (9.203, 455.66), (-3.087, 155.3), (8.694, 548.23), (-4.803, 284.77), 
+(1.749, -265.15), (5.087, 519.59), (-4.386, 144.69), (1.24, 243.51), (-1.734, 481.22), 
+(2.037, -445.44), (2.969, -1053.87), (0.436, -241.93), (5.292, -374.82), (-1.773, -590.97), (-3.754, -453.98)"""
 
-y_l = []
-for i in range(1, 41, 2):
-    y_value = values.split(",")[i]
-    y_value = y_value.replace(")", "")
-    y_value = y_value.replace("\n", "")
-    y_l.append(y_value)
-# print(y_l)
-
-df = pd.DataFrame(list(zip(x_l, y_l)), columns =['X', 'Y'])
-print(df)
+sample(values)
