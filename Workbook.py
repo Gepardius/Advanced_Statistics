@@ -130,10 +130,10 @@ def probability_density_function(a, b):
 # Variance; Var(X) = E[ (X – m)2 ]; where m is the mean value E(X)
 
 # load data into dataframe and calc. cov, E[X, Y], var[X, Y]
-def sample(values):
+def sample(xy_values):
     x_l = []
     for i in range(0, 40, 2):
-        x_value = values.split(",")[i]
+        x_value = xy_values.split(",")[i]
         x_value = x_value.replace("(", "")
         x_value = x_value.replace("\n", "")
         x_value = x_value.replace("−", "-")
@@ -143,7 +143,7 @@ def sample(values):
 
     y_l = []
     for i in range(1, 41, 2):
-        y_value = values.split(",")[i]
+        y_value = xy_values.split(",")[i]
         y_value = y_value.replace(")", "")
         y_value = y_value.replace("\n", "")
         y_value = y_value.replace("−", "-")
@@ -151,14 +151,14 @@ def sample(values):
         y_l.append(y_value)
     # print(y_l)
 
-    df = pd.DataFrame(list(zip(x_l, y_l)), columns =['X', 'Y'])
+    df = pd.DataFrame(list(zip(x_l, y_l)), columns=['X', 'Y'])
     df = df.astype(float)
     # print(df)
     x_mean = df["X"].mean()
     y_mean = df["Y"].mean()
     # print(f"x_mean = {x_mean}, y_mean = {y_mean}")
 
-    # covariance = Cov(X,Y) = Σ(Xi – μ)(Yj – ν) / (n-1)
+    # covariance = Cov(X,Y) = Σ(Xi – μ)(Yj – ν) / (n)
     # expected value of x and y; E[X, Y] = E(X) = S x P(X = x)
     # Var(X) = E[ (X – m)2 ]; Var(Y) = E[ (Y – m)2 ]
     sum_cov = 0
@@ -172,7 +172,7 @@ def sample(values):
         x_exp += xc * (1/20)    # x expected value
         y_exp += yc * (1/20)    # y expected value
 
-    covariance = sum_cov / 19
+    covariance = sum_cov / 20
 
     var_x = 0
     var_y = 0
@@ -203,11 +203,31 @@ def sample(values):
     plt.ylabel("Y values")
     plt.show()
 
+    # Y values graph
+    plt.clf()
+    nl = np.arange(1, 21, 1)
+    plt.scatter(nl, df["Y"], color="green")
+    plt.xticks(nl)
+    plt.xlabel("n")
+    plt.ylabel("Y values")
+    plt.show()
 
-values = """(−1.202, 563.024), (2.112, 291.072), (2.827, −893.619), (−0.314, 1321.814),
+    # X values graph
+    plt.clf()
+    nl = np.arange(1, 21, 1)
+    plt.scatter(nl, df["X"], color="green")
+    plt.xticks(nl)
+    plt.xlabel("n")
+    plt.ylabel("X values")
+    plt.show()
+
+values_c = """(−1.202, 563.024), (2.112, 291.072), (2.827, −893.619), (−0.314, 1321.814),
 (−1.477, −91.573), (−6.516, 446.336), (−0.920, −111.487), (3.477, −153.165),
 (−7.273, 1076.221), (2.251, 477.931), (−0.713, 909.696), (−0.853, 226.865),
 (−3.176, 389.413), (1.913, −47.169), (−1.070, −178.695), (−3.385, 744.486),
 (−9.506, 362.670), (−7.004, 364.578), (0.504, 324.975), (2.861, −360.571)"""
 
-# sample(values)
+sample(values_c)
+
+# 2. b)
+
