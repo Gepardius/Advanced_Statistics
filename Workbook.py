@@ -221,13 +221,35 @@ def sample(xy_values):
     plt.ylabel("X values")
     plt.show()
 
+
 values_c = """(−1.202, 563.024), (2.112, 291.072), (2.827, −893.619), (−0.314, 1321.814),
 (−1.477, −91.573), (−6.516, 446.336), (−0.920, −111.487), (3.477, −153.165),
 (−7.273, 1076.221), (2.251, 477.931), (−0.713, 909.696), (−0.853, 226.865),
 (−3.176, 389.413), (1.913, −47.169), (−1.070, −178.695), (−3.385, 744.486),
 (−9.506, 362.670), (−7.004, 364.578), (0.504, 324.975), (2.861, −360.571)"""
 
-sample(values_c)
+# sample(values_c)
 
 # 2. b)
+xs = []
+ys = []
+hist_bins = np.arange(-1, 1.01, 0.1)
+for n in range(10 ** 5):
+    # radius = np.sqrt(np.random.uniform())
+    radius = np.random.uniform()
+    theta = 2 * np.pi * np.random.uniform()
+    x_cord = radius * np.cos(theta)
+    y_cord = radius * np.sin(theta)
 
+    xs.append(x_cord)
+    ys.append(y_cord)
+
+plt.figure(1)
+plt.hist(xs, hist_bins)
+
+plt.figure(2)
+plt.hist(ys, hist_bins)
+
+plt.figure(3)
+plt.scatter(xs, ys, s=1)
+plt.show()
