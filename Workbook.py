@@ -1,10 +1,7 @@
-import statistics
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy.stats import poisson
-from scipy.stats import norm
-from scipy.integrate import quad
 import scipy.integrate as spi
 
 
@@ -32,7 +29,8 @@ def bernoulli(p):
     print(f"Expected value = {expected_value}")
 
 
-# bernoulli(0.27)
+bernoulli(0.03)
+
 
 # b) Poisson distribution
 def poisson_calculation(mu_poisson):
@@ -72,13 +70,10 @@ def poisson_calculation(mu_poisson):
     print(meteorites_table)
 
 
-# poisson_calculation(37)
+poisson_calculation(36)
+
 
 # c) probability density
-# 0. 3e−0.5 𝑦 + 0. 6e−0.25 𝑦
-# a * np.exp(-0.5 * y) + b * np.exp(-0.25 * y)
-# 0.55555555* e^(-0.5 * y) + 0.444444* e^(-0.25 * y)
-
 # define function and periodic variables
 def prob_density(aa, bb):
     aa = (aa % 1) / 99
@@ -110,10 +105,10 @@ def probability_density_function(a, b):
     plt.scatter(180, minute_probabilities[60], label="Q2", color="red")
     plt.scatter(210, minute_probabilities[90], label="Q3", color="red")
 
-    plt.text(210, .006, r'$\mu=\ $')
-    plt.text(217, .006, mean)
-    plt.text(210, .005, r'$\sigma=\ $')
-    plt.text(217, .005, variance)
+    plt.text(217, .008, r'$\mu=\ $')
+    plt.text(225, .008, mean)
+    plt.text(217, .007, r'$\sigma=\ $')
+    plt.text(225, .007, variance)
 
     plt.legend(loc=3)
     plt.xlabel("Minutes")
@@ -121,14 +116,11 @@ def probability_density_function(a, b):
     plt.show()
 
 
-# probability_density_function(0.83, 0.16)
+probability_density_function(0.20, 0.79)
+
 
 # 2.
 # a) Calculate the sample covariance as well as the sample’s expectations (mean) and variances of 𝑋 and 𝑌.
-# Covariance; Cov(X,Y) = Σ(Xi – μ)(Yj – ν) / (n-1)
-# the expected value is the sum of; [(each of the possible outcomes) × (the probability of the outcome occurring)]
-# Variance; Var(X) = E[ (X – m)2 ]; where m is the mean value E(X)
-
 # load data into dataframe and calc. cov, E[X, Y], var[X, Y]
 def sample(xy_values):
     x_l = []
@@ -222,13 +214,13 @@ def sample(xy_values):
     plt.show()
 
 
-values_c = """(−1.202, 563.024), (2.112, 291.072), (2.827, −893.619), (−0.314, 1321.814),
-(−1.477, −91.573), (−6.516, 446.336), (−0.920, −111.487), (3.477, −153.165),
-(−7.273, 1076.221), (2.251, 477.931), (−0.713, 909.696), (−0.853, 226.865),
-(−3.176, 389.413), (1.913, −47.169), (−1.070, −178.695), (−3.385, 744.486),
-(−9.506, 362.670), (−7.004, 364.578), (0.504, 324.975), (2.861, −360.571)"""
+values_c = """(0.906, -1163.46), (-3.445, 296.33), (-7.181, 615.33), (-0.551, 323.82), (-7.569, -381.88), 
+(-2.515, -247.44), (1.724, -415), (-4.305, 314.34), (1.352, -279.01), (4.02, -4.64), (14.374, 819.29), (-5.442, -77.98),
+ (-0.247, -529.87), (0.023, 80.07), (-7.353, 755.71), (6.906, 91.63), (-10.411, 142.87), (5.779, 364.04), 
+ (-8.156, -34.07), (2.249, -887.71)"""
 
-# sample(values_c)
+sample(values_c)
+
 
 # 2. b)
 def random_circle():
@@ -272,4 +264,4 @@ def random_circle():
     plt.show()
 
 
-# random_circle()
+random_circle()
