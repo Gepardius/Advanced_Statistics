@@ -231,25 +231,45 @@ values_c = """(−1.202, 563.024), (2.112, 291.072), (2.827, −893.619), (−0.
 # sample(values_c)
 
 # 2. b)
-xs = []
-ys = []
-hist_bins = np.arange(-1, 1.01, 0.1)
-for n in range(10 ** 5):
-    # radius = np.sqrt(np.random.uniform())
-    radius = np.random.uniform()
-    theta = 2 * np.pi * np.random.uniform()
-    x_cord = radius * np.cos(theta)
-    y_cord = radius * np.sin(theta)
+def random_circle():
+    xs = []
+    ys = []
+    hist_bins = np.arange(-1, 1.01, 0.1)
+    for n in range(10 ** 5):
+        # radius = np.sqrt(np.random.uniform())
+        radius = np.random.uniform()
+        theta = 2 * np.pi * np.random.uniform()
+        x_cord = radius * np.cos(theta)
+        y_cord = radius * np.sin(theta)
 
-    xs.append(x_cord)
-    ys.append(y_cord)
+        xs.append(x_cord)
+        ys.append(y_cord)
 
-plt.figure(1)
-plt.hist(xs, hist_bins)
+    plt.figure(1)
+    plt.hist(xs, hist_bins)
 
-plt.figure(2)
-plt.hist(ys, hist_bins)
+    plt.figure(2)
+    plt.hist(ys, hist_bins)
 
-plt.figure(3)
-plt.scatter(xs, ys, s=1)
-plt.show()
+    plt.figure(3, figsize=(8, 8))
+    plt.scatter(xs, ys, s=1)
+
+    # loop
+    x_interval = np.arange(-1, 1.001, 0.001)
+    pos = np.where(x_interval == 0.0)
+    x_interval = np.delete(x_interval, pos)
+    print(x_interval)
+
+    y_interval = []
+    for x in x_interval:
+        y_value = (1/(4 * np.pi))*(np.log(np.sqrt(1-x**2)+1)-np.log(1-np.sqrt(1-x**2)))
+        y_interval.append(y_value)
+
+    plt.figure(4)
+    plt.plot(x_interval, y_interval, color="#DC143C", lw=2.4)
+    # plt.hist(ys, hist_bins)
+
+    plt.show()
+
+
+# random_circle()
